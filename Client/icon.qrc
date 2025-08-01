@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>wenjian.png</file>
+        <file>wenjianjia.png</file>
+    </qresource>
+</RCC>

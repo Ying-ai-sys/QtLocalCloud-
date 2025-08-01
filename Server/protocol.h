@@ -1,0 +1,53 @@
+#ifndef PROTOCOL_H//防止重定义
+#define PROTOCOL_H
+
+#include<string.h>
+#include<stdlib.h>
+typedef unsigned int uint;//给无符号整型起了个uint的别名
+enum ENUM_MSG_TYPE{//枚举值
+    ENUM_MSG_TYPE_MIN=0,
+    ENUM_MSG_TYPE_REGIST_REQUEST,//注册 客户端给服务器的请求
+    ENUM_MSG_TYPE_REGIST_RESPOND,//注册 服务器给客户端的响应
+    ENUM_MSG_TYPE_LOGIN_REQUEST,//登录 客户端给服务器的请求
+    ENUM_MSG_TYPE_LOGIN_RESPOND,//登录 服务器给客户端的响应
+    ENUM_MSG_TYPE_FIND_USER_REQUEST,//查找
+    ENUM_MSG_TYPE_FIND_USER_RESPOND,
+    ENUM_MSG_TYPE_ADD_FRIEND_REQUEST,//添加用户
+    ENUM_MSG_TYPE_ADD_FRIEND_RESPOND,
+    ENUM_MSG_TYPE_ADD_FRIEND_RESEND,//转发
+    ENUM_MSG_TYPE_ADD_FRIEND_AGREE_REQUEST,//是否同意添加用户
+    ENUM_MSG_TYPE_ADD_FRIEND_AGREE_RESPOND,
+    ENUM_MSG_TYPE_FLUSH_FRIEND_REQUEST,//刷新用户
+    ENUM_MSG_TYPE_FLUSH_FRIEND_RESPOND,
+    ENUM_MSG_TYPE_CHAT_REQUEST,//聊天
+    ENUM_MSG_TYPE_CHAT_RESPOND,
+    ENUM_MSG_TYPE_MKDIR_REQUEST,//创建文件夹
+    ENUM_MSG_TYPE_MKDIR_RESPOND,
+    ENUM_MSG_TYPE_FLUSH_FILE_REQUEST,//刷新文件
+    ENUM_MSG_TYPE_FLUSH_FILE_RESPOND,
+    ENUM_MSG_TYPE_MOVE_FILE_REQUEST,//移动文件
+    ENUM_MSG_TYPE_MOVE_FILE_RESPOND,
+    ENUM_MSG_TYPE_UOLOAD_FILE_INIT_REQUEST,//上传文件
+    ENUM_MSG_TYPE_UOLOAD_FILE_INIT_RESPOND,
+    ENUM_MSG_TYPE_UOLOAD_FILE_DATA_REQUEST,//上传文件读取数据
+    ENUM_MSG_TYPE_UOLOAD_FILE_DATA_RESPOND,
+    ENUM_MSG_TYPE_SHARE_FILE_REQUEST,//分享文件
+    ENUM_MSG_TYPE_SHARE_FILE_RESPOND,
+    ENUM_MSG_TYPE_SHARE_FILE_AGREE_REQUEST,//分享文件
+    ENUM_MSG_TYPE_SHARE_FILE_AGREE_RESPOND,
+    ENUM_MSG_TYPE_MAX=0x00fffff,
+};
+struct FileInfo{
+    char caName[32];
+    int iType;
+};
+
+struct PDU{//定义的协议结构体
+    uint uiPDULen;//总长度
+    uint uiMsgLen;//数据长度，柔性数组长度
+    uint uiMsgType;//类型
+    char caData[64];//参数字符数组
+    char caMsg[];//柔性数组
+};
+PDU *mkPDU(uint uiMsgLen=0);//构建协议的函数，初始化长度为0
+#endif // PROTOCOL_H
